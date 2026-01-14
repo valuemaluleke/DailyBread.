@@ -1,0 +1,52 @@
+@model IEnumerable<DailyBread.Models.FavoriteVerse>
+
+@{
+    ViewData["Title"] = "My Journal";
+}
+
+<div class="container" style="margin-top: 50px;">
+    <h1 class="text-center">My Bible Journal 📖</h1>
+    <div class="text-center">
+        <a href="/" class="btn btn-outline-primary">⬅️ Back to Home</a>
+    </div>
+    
+    <hr />
+
+    <div class="row">
+        @foreach (var verse in Model)
+        {
+            <div class="col-md-6" style="margin-bottom: 20px;">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">@verse.Reference</h5>
+                        <p class="card-text" style="font-style: italic;">"@verse.Text"</p>
+                        
+                        @if (!string.IsNullOrEmpty(verse.Note))
+                        {
+                            <div class="alert alert-light border" style="font-size: 0.9rem; color: #555; margin-top: 10px;">
+                                📝 <strong>Note:</strong> @verse.Note
+                            </div>
+                        }
+                        <p class="text-muted small" style="margin-top: 10px;">Saved on: @verse.DateSaved.ToShortDateString()</p>
+                        
+                        <form asp-action="DeleteVerse" method="post" style="margin-top: 15px;">
+                            <input type="hidden" name="id" value="@verse.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                🗑️ Delete
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (!Model.Any())
+        {
+            <div class="text-center text-muted" style="margin-top: 50px;">
+                <h3>You haven't saved any verses yet! 😢</h3>
+                <p>Go back home and click the heart button!</p>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,29 @@
+@model IEnumerable<DailyBread.Models.ReadingPlan>
+@{ ViewData["Title"] = "Reading Plans"; }
+
+<div class="container text-center" style="margin-top: 50px;">
+    <h1 class="display-4">Reading Plans 📖</h1>
+    <p class="lead text-muted">Choose a journey to grow your faith.</p>
+    <a href="/" class="btn btn-outline-secondary btn-sm mb-4">⬅️ Back to Home</a>
+    <hr />
+
+    <div class="row justify-content-center">
+        @foreach (var plan in Model)
+        {
+            <div class="col-md-5 mb-4">
+                <div class="card shadow-sm h-100" style="border-radius: 15px; border: none; background: #fff;">
+                    <div class="card-body p-4">
+                        <div style="font-size: 3rem; margin-bottom: 10px;">@plan.ImageEmoji</div>
+                        <h3 class="card-title text-primary">@plan.Title</h3>
+                        <p class="text-muted">@plan.Description</p>
+                        <p class="small fw-bold">📅 @plan.Days.Count Days</p>
+                        
+                        <a href="/Home/PlanDay?planId=@plan.Id&day=1" class="btn btn-primary w-100 rounded-pill">
+                            Start Plan 🚀
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

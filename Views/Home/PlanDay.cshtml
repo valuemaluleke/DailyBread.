@@ -1,0 +1,39 @@
+@model DailyBread.Models.VerseViewModel
+@{
+    ViewData["Title"] = "Day " + ViewBag.DayNumber;
+    int currentDay = ViewBag.DayNumber;
+    int totalDays = ViewBag.TotalDays;
+    string planId = ViewBag.PlanId;
+    int nextDay = currentDay + 1;
+}
+
+<div class="container text-center" style="margin-top: 50px; max-width: 600px;">
+    
+    <span class="badge bg-warning text-dark mb-3">@ViewBag.PlanTitle</span>
+    <h2 class="text-muted">Day @currentDay of @totalDays</h2>
+    <h1 class="display-5 mb-4">@ViewBag.Theme</h1>
+
+    <div class="card shadow-sm mb-4" style="border-radius: 15px;">
+        <div class="card-body p-4">
+            <h3 class="text-primary">@Model.Reference</h3>
+            <p style="font-size: 1.4rem; font-style: italic; margin-top: 15px;">"@Model.Text"</p>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center gap-2">
+        <a href="/Home/ReadingPlans" class="btn btn-outline-secondary">📂 All Plans</a>
+        
+        @if (nextDay <= totalDays)
+        {
+            <a href="/Home/PlanDay?planId=@planId&day=@nextDay" class="btn btn-primary btn-lg">
+                Next Day ➡️
+            </a>
+        }
+        else
+        {
+            <a href="/Home/ReadingPlans" class="btn btn-success btn-lg">
+                🎉 Plan Completed!
+            </a>
+        }
+    </div>
+</div>

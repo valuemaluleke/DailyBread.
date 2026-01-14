@@ -1,0 +1,81 @@
+@model IEnumerable<DailyBread.Models.PrayerRequest>
+
+@{
+    ViewData["Title"] = "My Prayer Wall";
+    var activePrayers = Model.Where(p => !p.IsAnswered);
+    var answeredPrayers = Model.Where(p => p.IsAnswered);
+}
+
+<div class="container" style="max-width: 800px; margin-top: 50px;">
+    
+    <div class="text-center mb-5">
+        <h1 class="display-4">🙏 My Prayer Wall</h1>
+        <p class="text-muted">"Do not be anxious about anything, but in everything by prayer..."</p>
+        <a href="/" class="btn btn-outline-secondary btn-sm">⬅️ Back to Home</a>
+    </div>
+
+    <div class="card shadow-sm mb-5 p-4" style="border-radius: 15px;">
+        <form asp-action="AddPrayer" method="post">
+            <div class="input-group">
+                <input type="text" name="content" class="form-control form-control-lg" placeholder="What are you praying for today?" required>
+                <button class="btn btn-primary" type="submit">🕊️ Add Prayer</button>
+            </div>
+        </form>
+    </div>
+
+    <h3 class="text-primary mb-3">⏳ Waiting in Faith</h3>
+    @if (!activePrayers.Any())
+    {
+        <p class="text-muted">No active prayers right now.</p>
+    }
+    else
+    {
+        <div class="list-group mb-5">
+            @foreach (var prayer in activePrayers)
+            {
+                <div class="list-group-item d-flex justify-content-between align-items-center shadow-sm mb-2" style="border-radius: 10px; border: none;">
+                    <div>
+                        <span style="font-size: 1.1rem;">@prayer.Content</span>
+                        <div class="small text-muted">Praying since: @prayer.DateCreated.ToShortDateString()</div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <form asp-action="MarkAnswered" method="post">
+                            <input type="hidden" name="id" value="@prayer.Id" />
+                            <button type="submit" class="btn btn-outline-success btn-sm">🙌 Answered</button>
+                        </form>
+                        <form asp-action="DeletePrayer" method="post">
+                            <input type="hidden" name="id" value="@prayer.Id" />
+                            <button type="submit" class="btn btn-light btn-sm text-danger">✕</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if (answeredPrayers.Any())
+    {
+        <h3 class="text-success mb-3">🎉 Praise Reports</h3>
+        <div class="list-group">
+            @foreach (var prayer in answeredPrayers)
+            {
+                <div class="list-group-item d-flex justify-content-between align-items-center mb-2" style="background-color: #f0fdf4; border-color: #bbf7d0;">
+                    <div>
+                        <span style="text-decoration: line-through; color: #888;">@prayer.Content</span>
+                        <div class="small text-success"><strong>Answered!</strong></div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <form asp-action="MarkAnswered" method="post">
+                            <input type="hidden" name="id" value="@prayer.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">Undo</button>
+                        </form>
+                        <form asp-action="DeletePrayer" method="post">
+                            <input type="hidden" name="id" value="@prayer.Id" />
+                            <button type="submit" class="btn btn-sm text-danger">✕</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
