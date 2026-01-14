@@ -1,5 +1,5 @@
-# 1. Use the official .NET SDK to build the app
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# 1. Use the official .NET SDK 9.0 to build the app
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Copy the project file and restore dependencies
@@ -11,8 +11,8 @@ COPY . .
 # Build and publish the app to a folder
 RUN dotnet publish -c Release -o /app/publish
 
-# 2. Use the runtime image to run the app (smaller and faster)
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+# 2. Use the runtime image 9.0 to run the app
+FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
 COPY --from=build /app/publish .
 
