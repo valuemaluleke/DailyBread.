@@ -77,7 +77,6 @@ namespace DailyBread.Controllers
 
         public async Task<IActionResult> Index(string mood, string userFeeling, string translation)
         {
-            // Removed UpdateStreak() logic
 
             if (!string.IsNullOrEmpty(translation))
                 Response.Cookies.Append("BibleVersion", translation, new CookieOptions { Expires = DateTime.Now.AddYears(1) });
@@ -121,7 +120,7 @@ namespace DailyBread.Controllers
             }
         }
 
-        // Removed the UpdateStreak() method completely
+    
 
         [HttpPost]
         public async Task<IActionResult> SaveVerse(VerseViewModel model, string userNote)
