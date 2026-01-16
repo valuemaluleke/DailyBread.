@@ -9,21 +9,30 @@
 <div class="container" style="max-width: 800px; margin-top: 50px;">
     
     <div class="text-center mb-5">
-        <h1 class="display-4">🙏 My Prayer Wall</h1>
+        <h1 class="display-4" style="font-weight: 700;">
+            <i class="bi bi-people-fill text-primary"></i> My Prayer Wall
+        </h1>
         <p class="text-muted">"Do not be anxious about anything, but in everything by prayer..."</p>
-        <a href="/" class="btn btn-outline-secondary btn-sm">⬅️ Back to Home</a>
+        <a href="/" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center gap-2">
+            <i class="bi bi-arrow-left"></i> Back to Home
+        </a>
     </div>
 
     <div class="card shadow-sm mb-5 p-4" style="border-radius: 15px;">
         <form asp-action="AddPrayer" method="post">
             <div class="input-group">
                 <input type="text" name="content" class="form-control form-control-lg" placeholder="What are you praying for today?" required>
-                <button class="btn btn-primary" type="submit">🕊️ Add Prayer</button>
+                <button class="btn btn-primary d-flex align-items-center gap-2" type="submit">
+                    <i class="bi bi-send-fill"></i> Add Prayer
+                </button>
             </div>
         </form>
     </div>
 
-    <h3 class="text-primary mb-3">⏳ Waiting in Faith</h3>
+    <h3 class="text-primary mb-3 d-flex align-items-center gap-2">
+        <i class="bi bi-hourglass-split"></i> Waiting in Faith
+    </h3>
+    
     @if (!activePrayers.Any())
     {
         <p class="text-muted">No active prayers right now.</p>
@@ -35,17 +44,23 @@
             {
                 <div class="list-group-item d-flex justify-content-between align-items-center shadow-sm mb-2" style="border-radius: 10px; border: none;">
                     <div>
-                        <span style="font-size: 1.1rem;">@prayer.Content</span>
-                        <div class="small text-muted">Praying since: @prayer.DateCreated.ToShortDateString()</div>
+                        <span style="font-size: 1.1rem; font-weight: 500;">@prayer.Content</span>
+                        <div class="small text-muted d-flex align-items-center gap-1">
+                            <i class="bi bi-clock"></i> Praying since: @prayer.DateCreated.ToShortDateString()
+                        </div>
                     </div>
                     <div class="d-flex gap-2">
                         <form asp-action="MarkAnswered" method="post">
                             <input type="hidden" name="id" value="@prayer.Id" />
-                            <button type="submit" class="btn btn-outline-success btn-sm">🙌 Answered</button>
+                            <button type="submit" class="btn btn-outline-success btn-sm d-flex align-items-center gap-1">
+                                <i class="bi bi-check-circle-fill"></i> Answered
+                            </button>
                         </form>
                         <form asp-action="DeletePrayer" method="post">
                             <input type="hidden" name="id" value="@prayer.Id" />
-                            <button type="submit" class="btn btn-light btn-sm text-danger">✕</button>
+                            <button type="submit" class="btn btn-light btn-sm text-danger border">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -55,23 +70,31 @@
 
     @if (answeredPrayers.Any())
     {
-        <h3 class="text-success mb-3">🎉 Praise Reports</h3>
+        <h3 class="text-success mb-3 d-flex align-items-center gap-2">
+            <i class="bi bi-stars"></i> Praise Reports
+        </h3>
         <div class="list-group">
             @foreach (var prayer in answeredPrayers)
             {
                 <div class="list-group-item d-flex justify-content-between align-items-center mb-2" style="background-color: #f0fdf4; border-color: #bbf7d0;">
                     <div>
                         <span style="text-decoration: line-through; color: #888;">@prayer.Content</span>
-                        <div class="small text-success"><strong>Answered!</strong></div>
+                        <div class="small text-success d-flex align-items-center gap-1">
+                            <i class="bi bi-check-all"></i> <strong>Answered!</strong>
+                        </div>
                     </div>
                     <div class="d-flex gap-2">
                         <form asp-action="MarkAnswered" method="post">
                             <input type="hidden" name="id" value="@prayer.Id" />
-                            <button type="submit" class="btn btn-sm btn-outline-secondary">Undo</button>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1">
+                                <i class="bi bi-arrow-counterclockwise"></i> Undo
+                            </button>
                         </form>
                         <form asp-action="DeletePrayer" method="post">
                             <input type="hidden" name="id" value="@prayer.Id" />
-                            <button type="submit" class="btn btn-sm text-danger">✕</button>
+                            <button type="submit" class="btn btn-sm text-danger bg-white border">
+                                <i class="bi bi-trash"></i>
+                            </button>
                         </form>
                     </div>
                 </div>

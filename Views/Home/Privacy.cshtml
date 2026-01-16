@@ -1,6 +1,72 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Privacy & Roadmap";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container" style="max-width: 800px; margin-top: 50px;">
+    
+    <div class="mb-5 text-center">
+        <h1 class="display-5 fw-bold mb-3">Privacy & Project Roadmap</h1>
+        
+    </div>
+
+    <div class="alert alert-warning shadow-sm border-0 d-flex gap-3 align-items-start p-4 mb-5" style="border-radius: 15px;">
+        <i class="bi bi-exclamation-triangle-fill fs-1 text-warning mt-1"></i>
+        <div>
+            <h4 class="alert-heading fw-bold text-dark">Important: No Sign-In Yet</h4>
+            <p class="mb-0 text-dark">
+                <strong>Daily Bread</strong> is currently a personal project in active development. 
+                At this stage, <strong>there are no user accounts.</strong>
+            </p>
+            <hr>
+            <p class="mb-0 small text-dark">
+                ⚠️ Anything you post to the <strong>Prayer Wall</strong> is visible to other visitors. 
+                Please do not share sensitive personal information or secrets until the secure Sign-In feature is released.
+            </p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-body p-4">
+            <h4 class="card-title d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-signpost-split-fill text-primary"></i> Future Roadmap
+            </h4>
+            <p class="card-text text-muted">
+                I am actively working to make this a fully secure, multi-user application. The next major update will include:
+            </p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item border-0 px-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-person-lock text-success"></i>
+                    <strong>User Authentication:</strong> You will be able to create a secure account and sign in.
+                </li>
+                <li class="list-group-item border-0 px-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-journal-lock text-success"></i>
+                    <strong>Private Journals:</strong> Your saved verses and notes will be encrypted and visible <em>only</em> to you.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4 border-0">
+        <div class="card-body p-4">
+            <h4 class="card-title d-flex align-items-center gap-2 mb-3">
+                <i class="bi bi-hdd-network text-secondary"></i> How Data Works Today
+            </h4>
+            <p class="card-text text-muted">
+                Since this is a demo environment:
+            </p>
+            <ul>
+                <li><strong>Storage:</strong> Data is stored on a temporary cloud database. It may be reset periodically as we deploy updates.</li>
+                <li><strong>Cookies:</strong> We use local browser storage to remember your preferred Bible version and theme settings.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="mt-5 pt-3 border-top text-center">
+        <h5 class="fw-bold">Developer Contact</h5>
+        <p class="text-muted">Have feedback or want to suggest a feature?</p>
+        <a href="mailto:hello@dailybread.demo" class="btn btn-outline-dark btn-sm rounded-pill px-4 mt-2">
+            <i class="bi bi-envelope-fill"></i> Contact Developer
+        </a>
+    </div>
+
+</div>

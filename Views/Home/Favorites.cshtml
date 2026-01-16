@@ -4,35 +4,51 @@
     ViewData["Title"] = "My Journal";
 }
 
-<div class="container" style="margin-top: 50px;">
-    <h1 class="text-center">My Bible Journal 📖</h1>
-    <div class="text-center">
-        <a href="/" class="btn btn-outline-primary">⬅️ Back to Home</a>
+<div class="container" style="max-width: 900px; margin-top: 50px;">
+    
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">
+            <i class="bi bi-journal-bookmark-fill text-primary"></i> My Bible Journal
+        </h1>
+        <a href="/" class="btn btn-outline-secondary btn-sm mt-2 d-inline-flex align-items-center gap-2">
+            <i class="bi bi-arrow-left"></i> Back to Home
+        </a>
     </div>
     
-    <hr />
-
-    <div class="row">
+    <div class="row g-4">
         @foreach (var verse in Model)
         {
-            <div class="col-md-6" style="margin-bottom: 20px;">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <h5 class="card-title text-primary">@verse.Reference</h5>
-                        <p class="card-text" style="font-style: italic;">"@verse.Text"</p>
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100 border-0" style="border-radius: 15px;">
+                    <div class="card-body p-4 d-flex flex-column">
+                        
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title text-primary fw-bold mb-0">
+                                <i class="bi bi-bookmark-star me-1"></i> @verse.Reference
+                            </h5>
+                            <small class="text-muted d-flex align-items-center gap-1">
+                                <i class="bi bi-calendar3"></i> @verse.DateSaved.ToShortDateString()
+                            </small>
+                        </div>
+
+                        <p class="card-text flex-grow-1" style="font-style: italic; font-size: 1.1rem; line-height: 1.6;">
+                            "@verse.Text"
+                        </p>
                         
                         @if (!string.IsNullOrEmpty(verse.Note))
                         {
-                            <div class="alert alert-light border" style="font-size: 0.9rem; color: #555; margin-top: 10px;">
-                                📝 <strong>Note:</strong> @verse.Note
+                            <div class="alert alert-warning border-0 bg-opacity-10 d-flex gap-2 align-items-start mt-3" style="border-radius: 10px;">
+                                <i class="bi bi-sticky text-warning mt-1"></i>
+                                <div>
+                                    <strong>Note:</strong> @verse.Note
+                                </div>
                             </div>
                         }
-                        <p class="text-muted small" style="margin-top: 10px;">Saved on: @verse.DateSaved.ToShortDateString()</p>
                         
-                        <form asp-action="DeleteVerse" method="post" style="margin-top: 15px;">
+                        <form asp-action="DeleteVerse" method="post" class="mt-3 text-end">
                             <input type="hidden" name="id" value="@verse.Id" />
-                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                🗑️ Delete
+                            <button type="submit" class="btn btn-sm btn-outline-danger border-0 d-inline-flex align-items-center gap-1">
+                                <i class="bi bi-trash"></i> Delete Entry
                             </button>
                         </form>
 
@@ -43,9 +59,11 @@
 
         @if (!Model.Any())
         {
-            <div class="text-center text-muted" style="margin-top: 50px;">
-                <h3>You haven't saved any verses yet! 😢</h3>
-                <p>Go back home and click the heart button!</p>
+            <div class="col-12 text-center text-muted" style="margin-top: 80px;">
+                <i class="bi bi-journal-x" style="font-size: 4rem; opacity: 0.5;"></i>
+                <h3 class="mt-3 fw-light">Your journal is empty</h3>
+                <p>Go back home and click the <i class="bi bi-heart-fill text-danger"></i> button to save a verse!</p>
+                <a href="/" class="btn btn-primary mt-2">Start Reading</a>
             </div>
         }
     </div>

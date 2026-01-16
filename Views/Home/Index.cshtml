@@ -4,12 +4,10 @@
 @{
     ViewData["Title"] = "Daily Bread";
     var currentFeeling = ViewData["UserFeeling"] as string;
-    var streak = ViewBag.Streak ?? 1;
     var dailyPrayer = ViewBag.Prayer as string;
     var currentVersion = ViewBag.CurrentVersion as string;
-    var missedDay = ViewBag.MissedDay as bool? ?? false;
 
-    var shareText = $"🍞 Daily Bread: \"{Model.Text}\" - {Model.Reference} ({currentVersion.ToUpper()})";
+    var shareText = $"Daily Bread: \"{Model.Text}\" - {Model.Reference} ({currentVersion.ToUpper()})";
     var whatsappUrl = $"https://wa.me/?text={Uri.EscapeDataString(shareText)}";
     var twitterUrl = $"https://twitter.com/intent/tweet?text={Uri.EscapeDataString(shareText)}";
 }
@@ -19,45 +17,36 @@
     <div class="d-flex justify-content-end align-items-center gap-2" style="position: absolute; top: 0; right: 0; margin-top: 10px;">
         
         <div class="dropdown">
-            <button class="btn btn-sm btn-outline-warning rounded-circle shadow-sm" type="button" id="reminderDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;">
-                <span id="bellIcon">🔔</span>
+            <button class="btn btn-sm btn-outline-warning rounded-circle shadow-sm d-flex align-items-center justify-content-center" type="button" id="reminderDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 38px; height: 38px;">
+                <i id="bellIcon" class="bi bi-bell" style="font-size: 1.1rem;"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end p-3 shadow" style="width: 280px; border-radius: 15px;">
-                <li><h6 class="dropdown-header">📅 Set Daily Reminder</h6></li>
+                <li><h6 class="dropdown-header"><i class="bi bi-calendar-event"></i> Set Daily Reminder</h6></li>
                 <li><small id="currentReminderStatus" class="text-muted ps-3">No reminder set.</small></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><button onclick="setReminder('morning')" class="dropdown-item rounded">🌅 Morning (8:00 AM)</button></li>
-                <li><button onclick="setReminder('afternoon')" class="dropdown-item rounded">☀️ Afternoon (12:00 PM)</button></li>
-                <li><button onclick="setReminder('night')" class="dropdown-item rounded">🌙 Night (8:00 PM)</button></li>
+                <li><button onclick="setReminder('morning')" class="dropdown-item rounded"><i class="bi bi-sunrise"></i> Morning (8:00 AM)</button></li>
+                <li><button onclick="setReminder('afternoon')" class="dropdown-item rounded"><i class="bi bi-sun"></i> Afternoon (12:00 PM)</button></li>
+                <li><button onclick="setReminder('night')" class="dropdown-item rounded"><i class="bi bi-moon-stars"></i> Night (8:00 PM)</button></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><button onclick="clearReminder()" class="dropdown-item rounded text-danger">🔕 Turn Off</button></li>
+                <li><button onclick="clearReminder()" class="dropdown-item rounded text-danger"><i class="bi bi-bell-slash"></i> Turn Off</button></li>
             </ul>
         </div>
 
         <form method="get" action="/" style="margin: 0;">
-            <select name="translation" onchange="this.form.submit()" class="form-select form-select-sm shadow-sm" style="border-radius: 20px; cursor: pointer; width: auto;">
+            <select name="translation" onchange="this.form.submit()" class="form-select form-select-sm shadow-sm" style="border-radius: 20px; cursor: pointer; width: auto; font-weight: 500;">
                 <option value="web" selected="@(currentVersion == "web")">WEB (Modern)</option>
                 <option value="kjv" selected="@(currentVersion == "kjv")">KJV (Classic)</option>
                 <option value="bbe" selected="@(currentVersion == "bbe")">BBE (Simple)</option>
             </select>
         </form>
 
-        <span class="badge rounded-pill bg-warning text-dark shadow-sm d-flex align-items-center" style="font-size: 1rem; padding: 8px 15px;">
-            🔥 @streak
-        </span>
     </div>
 
-    @if (missedDay)
-    {
-        <div class="alert alert-warning shadow-sm text-center" role="alert" style="margin-top: 60px; border-radius: 15px; border-left: 5px solid #f59e0b;">
-            <strong>Hey bestie 💛</strong> We missed you yesterday! Don’t forget your time with God today.
-            <button type="button" class="btn-close ms-2" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-
-    <div class="text-center" style="@(missedDay ? "margin-top: 20px;" : "margin-top: 60px;")">
-        <h1 class="display-4">Risi's Daily Bread 🍞</h1>
-        <p class="lead text-muted"> Daily dose of wisdom.</p>
+    <div class="text-center" style="margin-top: 60px;">
+        <h1 class="display-4" style="font-weight: 800; letter-spacing: -1px;">
+            Daily Bread <i class="bi bi-journal-richtext text-primary"></i>
+        </h1>
+        <p class="lead text-muted">Daily dose of wisdom.</p>
         <hr />
 
         <div class="mood-selector" style="margin-bottom: 30px; background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
@@ -65,16 +54,21 @@
                 <label style="font-weight: 600; color: #78716c; margin-bottom: 10px; display: block;">
                     How are you feeling right now?
                 </label>
-                <input type="text" name="userFeeling" class="form-control text-center" 
-                       placeholder="e.g. Anxious about work..." value="@currentFeeling" 
-                       style="max-width: 400px; margin: 0 auto 15px auto; border-radius: 20px;" />
+                <div class="input-group" style="max-width: 400px; margin: 0 auto 15px auto;">
+                    <span class="input-group-text bg-light border-0" style="border-radius: 20px 0 0 20px; padding-left: 20px;">
+                        <i class="bi bi-search text-muted"></i>
+                    </span>
+                    <input type="text" name="userFeeling" class="form-control text-center border-0 bg-light" 
+                           placeholder="e.g. Anxious about work..." value="@currentFeeling" 
+                           style="border-radius: 0 20px 20px 0;" />
+                </div>
 
                 <div class="d-flex justify-content-center gap-2 flex-wrap mt-3">
-                    <button type="submit" name="mood" value="anxious" class="btn btn-outline-dark btn-sm rounded-pill">😟 Anxious</button>
-                    <button type="submit" name="mood" value="sad" class="btn btn-outline-dark btn-sm rounded-pill">😢 Sad</button>
-                    <button type="submit" name="mood" value="grateful" class="btn btn-outline-dark btn-sm rounded-pill">🙏 Grateful</button>
-                    <button type="submit" name="mood" value="hopeful" class="btn btn-outline-dark btn-sm rounded-pill">✨ Hopeful</button>
-                    <a href="/" class="btn btn-outline-secondary btn-sm rounded-pill">🎲 Surprise Me</a>
+                    <button type="submit" name="mood" value="anxious" class="btn btn-outline-dark btn-sm rounded-pill"><i class="bi bi-cloud-rain"></i> Anxious</button>
+                    <button type="submit" name="mood" value="sad" class="btn btn-outline-dark btn-sm rounded-pill"><i class="bi bi-droplet"></i> Sad</button>
+                    <button type="submit" name="mood" value="grateful" class="btn btn-outline-dark btn-sm rounded-pill"><i class="bi bi-heart"></i> Grateful</button>
+                    <button type="submit" name="mood" value="hopeful" class="btn btn-outline-dark btn-sm rounded-pill"><i class="bi bi-sun"></i> Hopeful</button>
+                    <a href="/" class="btn btn-outline-secondary btn-sm rounded-pill"><i class="bi bi-dice-3"></i> Surprise Me</a>
                 </div>
             </form>
         </div>
@@ -84,36 +78,44 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2 class="card-title text-primary mb-0">@Model.Reference</h2>
                     <div class="d-flex gap-2 align-items-center">
-                        <button onclick="toggleSpeech()" id="audioBtn" class="btn btn-light btn-sm rounded-circle border">🔊</button>
+                        <button onclick="toggleSpeech()" id="audioBtn" class="btn btn-light btn-sm rounded-circle border d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                            <i class="bi bi-volume-up"></i>
+                        </button>
                         <span class="badge bg-light text-secondary border">@currentVersion.ToUpper()</span>
                     </div>
                 </div>
                 <p class="card-text" style="font-size: 1.5rem; font-style: italic;">"@Model.Text"</p>
                 
                 <div class="d-flex justify-content-center gap-3 mt-4 pt-3 border-top">
-                    <a href="@whatsappUrl" target="_blank" class="btn btn-sm btn-success rounded-pill" style="min-width: 100px;">💬 WhatsApp</a>
-                    <a href="@twitterUrl" target="_blank" class="btn btn-sm btn-dark rounded-pill" style="min-width: 100px;">🐦 X / Tweet</a>
-                    <button onclick="copyToClipboard()" class="btn btn-sm btn-outline-primary rounded-pill" style="min-width: 100px;">📋 Copy</button>
+                    <a href="@whatsappUrl" target="_blank" class="btn btn-sm btn-success rounded-pill px-3"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+                    <a href="@twitterUrl" target="_blank" class="btn btn-sm btn-dark rounded-pill px-3"><i class="bi bi-twitter-x"></i> Post</a>
+                    <button onclick="copyToClipboard()" class="btn btn-sm btn-outline-primary rounded-pill px-3"><i class="bi bi-clipboard"></i> Copy</button>
                 </div>
             </div>
         </div>
 
         <div class="card shadow-sm border-0" style="margin: 0 auto 30px auto; max-width: 600px; background-color: #eff6ff; border-left: 5px solid #3b82f6 !important;">
             <div class="card-body text-start">
-                <h5 style="color: #1e40af; font-weight: 700;">🙏 Prayer for Today</h5>
+                <h5 style="color: #1e40af; font-weight: 700; margin-bottom: 8px;">
+                    <i class="bi bi-chat-quote-fill me-2"></i>Prayer for Today
+                </h5>
                 <p class="mb-0" style="color: #1e3a8a; font-family: 'Merriweather', serif; font-style: italic;">"@dailyPrayer"</p>
             </div>
         </div>
 
         <div class="d-flex justify-content-center gap-3" style="margin-top: 20px;">
-            <a href="/" class="btn btn-outline-dark btn-lg" style="height: 100%; display: flex; align-items: center;">✨ Give me Another  Verse</a>
+            <a href="/" class="btn btn-outline-dark btn-lg px-4 d-flex align-items-center gap-2">
+                <i class="bi bi-arrow-right-circle"></i> Next Verse
+            </a>
             <form asp-action="SaveVerse" method="post" style="text-align: left; width: 300px;">
                 <input type="hidden" asp-for="Reference" />
                 <input type="hidden" asp-for="Text" />
                 <div style="margin-bottom: 10px;">
-                    <textarea name="userNote" class="form-control" placeholder="Write a personal note... (Optional)" rows="2">@currentFeeling</textarea>
+                    <textarea name="userNote" class="form-control" placeholder="Write a personal note... (Optional)" rows="2"></textarea>
                 </div>
-                <button type="submit" class="btn btn-danger w-100 btn-lg">❤️ Save to Journal</button>
+                <button type="submit" class="btn btn-danger w-100 btn-lg d-flex align-items-center justify-content-center gap-2">
+                    <i class="bi bi-heart-fill"></i> Save to Journal
+                </button>
             </form>
         </div>
 
@@ -125,7 +127,7 @@
                 <a href="/Home/Favorites" class="card text-decoration-none shadow-sm h-100 border-0 nav-card" 
                    style="width: 140px; border-radius: 20px; transition: all 0.2s ease;">
                     <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-4">
-                        <span style="font-size: 2.5rem; margin-bottom: 10px;">📂</span>
+                        <i class="bi bi-journal-bookmark text-primary mb-3" style="font-size: 2rem;"></i>
                         <span class="fw-bold text-dark">Journal</span>
                     </div>
                 </a>
@@ -135,7 +137,7 @@
                 <a href="/Home/PrayerWall" class="card text-decoration-none shadow-sm h-100 border-0 nav-card" 
                    style="width: 140px; border-radius: 20px; transition: all 0.2s ease;">
                     <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-4">
-                        <span style="font-size: 2.5rem; margin-bottom: 10px;">🙏</span>
+                        <i class="bi bi-people text-primary mb-3" style="font-size: 2rem;"></i>
                         <span class="fw-bold text-dark">Prayers</span>
                     </div>
                 </a>
@@ -145,7 +147,7 @@
                 <a href="/Home/ReadingPlans" class="card text-decoration-none shadow-sm h-100 border-0 nav-card" 
                    style="width: 140px; border-radius: 20px; transition: all 0.2s ease;">
                     <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-4">
-                        <span style="font-size: 2.5rem; margin-bottom: 10px;">📖</span>
+                        <i class="bi bi-book text-primary mb-3" style="font-size: 2rem;"></i>
                         <span class="fw-bold text-dark">Plans</span>
                     </div>
                 </a>
@@ -154,13 +156,11 @@
         </div>
 
         <style>
-            .nav-card {
-                background-color: #ffffff; 
-            }
+            .nav-card { background-color: #ffffff; }
             .nav-card:hover {
-                transform: translateY(-8px); /* Lifts up */
-                box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important; /* Glow effect */
-                background-color: #fffbeb; /* Slight warm tint */
+                transform: translateY(-8px);
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+                background-color: #fffbeb;
             }
         </style>
     </div>
@@ -170,56 +170,55 @@
     // --- COPY FUNCTION ---
     function copyToClipboard() {
         var text = 'Daily Bread: "@Model.Text" - @Model.Reference (@currentVersion.ToUpper())';
-        navigator.clipboard.writeText(text).then(function() { alert("Verse copied to clipboard! 📋"); });
+        navigator.clipboard.writeText(text).then(function() { alert("Verse copied! ✅"); });
     }
 
     // --- TEXT TO SPEECH ---
     let isSpeaking = false;
     function toggleSpeech() {
         const btn = document.getElementById('audioBtn');
-        if (isSpeaking) { window.speechSynthesis.cancel(); isSpeaking = false; btn.innerText = "🔊"; }
-        else {
+        const icon = btn.querySelector('i');
+        
+        if (isSpeaking) { 
+            window.speechSynthesis.cancel(); 
+            isSpeaking = false; 
+            icon.className = "bi bi-volume-up"; 
+        } else {
             const text = "@Model.Reference" + ". " + "@Model.Text".replace(/&quot;/g, '');
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.rate = 0.9;
             const voices = window.speechSynthesis.getVoices();
             const preferredVoice = voices.find(v => v.name.includes("Zira") || v.name.includes("Google US English"));
             if (preferredVoice) utterance.voice = preferredVoice;
-            utterance.onend = function() { isSpeaking = false; btn.innerText = "🔊"; };
+            
+            utterance.onend = function() { 
+                isSpeaking = false; 
+                icon.className = "bi bi-volume-up"; 
+            };
+            
             window.speechSynthesis.speak(utterance);
             isSpeaking = true;
-            btn.innerText = "⏹️";
+            icon.className = "bi bi-stop-circle"; // Change icon to Stop while playing
         }
     }
 
     // --- AUTOMATIC REMINDERS ---
-    
-    // 1. Run this when page loads to check if we have a saved reminder
     document.addEventListener('DOMContentLoaded', function() {
         var savedTime = localStorage.getItem('dailyReminderTime');
         if (savedTime) {
-            console.log("Found saved reminder: " + savedTime);
             startTimer(savedTime);
             updateStatusText(savedTime);
         }
     });
 
     function setReminder(timeOfDay) {
-        // Ask Permission first
-        if (!("Notification" in window)) {
-            alert("This browser does not support notifications");
-            return;
-        }
-
+        if (!("Notification" in window)) { alert("This browser does not support notifications"); return; }
         Notification.requestPermission().then(function (permission) {
             if (permission === "granted") {
-                // Save to Memory
                 localStorage.setItem('dailyReminderTime', timeOfDay);
-                
-                // Start Timer
                 startTimer(timeOfDay);
                 updateStatusText(timeOfDay);
-                alert("Reminder set for " + timeOfDay + "! ⏰ We'll remember this for tomorrow too.");
+                alert("Reminder set for " + timeOfDay + "! ⏰");
             }
         });
     }
@@ -227,7 +226,7 @@
     function clearReminder() {
         localStorage.removeItem('dailyReminderTime');
         updateStatusText(null);
-        alert("Reminder turned off. 🔕");
+        alert("Reminder turned off.");
     }
 
     function updateStatusText(timeOfDay) {
@@ -237,23 +236,20 @@
         if (timeOfDay) {
             status.innerHTML = "✅ Active: <strong>" + timeOfDay.charAt(0).toUpperCase() + timeOfDay.slice(1) + "</strong>";
             status.className = "text-success ps-3";
-            bell.innerText = "⏰"; // Change icon to clock
+            bell.className = "bi bi-alarm-fill"; // Filled alarm icon
         } else {
             status.innerHTML = "No reminder set.";
             status.className = "text-muted ps-3";
-            bell.innerText = "🔔";
+            bell.className = "bi bi-bell"; // Outline bell icon
         }
     }
 
     function startTimer(timeOfDay) {
-        // Check time every 60 seconds
         setInterval(function() {
             var now = new Date();
-            var hours = now.getHours();
             var minutes = now.getMinutes();
-
-            // Only fire at minute 0 (top of the hour)
             if (minutes === 0) {
+                var hours = now.getHours();
                 if (timeOfDay === 'morning' && hours === 8) showNotification();
                 if (timeOfDay === 'afternoon' && hours === 12) showNotification();
                 if (timeOfDay === 'night' && hours === 20) showNotification();
@@ -262,9 +258,9 @@
     }
 
     function showNotification() {
-        var notification = new Notification("Risi's Daily Bread 🍞", {
-            body: "Hey bestie 💛 Don’t forget your time with God today!",
-            icon: "https://emojigraph.org/media/apple/bread_1f35e.png"
+        new Notification("Risi's Daily Bread", {
+            body: "Hey bestie. Don’t forget your time with God today!",
+            icon: "https://emojigraph.org/media/apple/bread_1f35e.png" // We can keep this one as it's a notification badge
         });
     }
 </script>

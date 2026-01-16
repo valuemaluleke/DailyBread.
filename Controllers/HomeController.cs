@@ -77,7 +77,7 @@ namespace DailyBread.Controllers
 
         public async Task<IActionResult> Index(string mood, string userFeeling, string translation)
         {
-            UpdateStreak(); // 🔥 This now checks for missed days too!
+            // Removed UpdateStreak() logic
 
             if (!string.IsNullOrEmpty(translation))
                 Response.Cookies.Append("BibleVersion", translation, new CookieOptions { Expires = DateTime.Now.AddYears(1) });
@@ -121,50 +121,7 @@ namespace DailyBread.Controllers
             }
         }
 
-        // 👇 UPDATED: The Smart Streak Logic
-        private void UpdateStreak()
-        {
-            int currentStreak = int.Parse(Request.Cookies["StreakCount"] ?? "0");
-            string lastVisit = Request.Cookies["LastVisitDate"] ?? "";
-            DateTime today = DateTime.Today;
-            DateTime lastDate;
-
-            bool isMissedDay = false ; // Track if they missed a day
-
-            if (DateTime.TryParse(lastVisit, out lastDate))
-            {
-                if (lastDate == today) 
-                {
-                    // Already visited today
-                }
-                else if (lastDate == today.AddDays(-1)) 
-                {
-                    // Visited yesterday! Streak goes up
-                    currentStreak++;
-                }
-                else 
-                {
-                    // Missed a day! Reset streak
-                    currentStreak = 1;
-                    isMissedDay = true; // 😢 They missed a day
-                }
-            }
-            else 
-            {
-                // First visit ever
-                currentStreak = 1;
-            }
-
-            // Save Cookies
-            var options = new CookieOptions { Expires = DateTime.Now.AddYears(1) };
-            Response.Cookies.Append("StreakCount", currentStreak.ToString(), options);
-            Response.Cookies.Append("LastVisitDate", today.ToString("yyyy-MM-dd"), options);
-
-            ViewBag.Streak = currentStreak;
-            
-            // Send this flag to the View so we can show the "Hey Bestie" banner
-            ViewBag.MissedDay = isMissedDay; 
-        }
+        // Removed the UpdateStreak() method completely
 
         [HttpPost]
         public async Task<IActionResult> SaveVerse(VerseViewModel model, string userNote)
