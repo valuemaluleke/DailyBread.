@@ -8,13 +8,13 @@ namespace DailyBread.Models
         public string Theme { get; set; }     // e.g., "The Lord is my Shepherd"
     }
 
-    // 2. The whole plan (e.g., "7 Days of Peace")
+    // 2. The whole plan 
     public class ReadingPlan
     {
-        public string Id { get; set; }          // e.g., "peace"
-        public string Title { get; set; }       // e.g., "7 Days of Peace"
-        public string Description { get; set; } // e.g., "Find rest for your soul."
-        public string ImageEmoji { get; set; }  // e.g., "🕊️"
+        public string Id { get; set; }         
+        public string Title { get; set; }       
+        public string Description { get; set; } 
+        public string ImageEmoji { get; set; }  
         public List<PlanDay> Days { get; set; } = new List<PlanDay>();
     }
 }
