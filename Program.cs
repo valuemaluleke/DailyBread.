@@ -32,7 +32,6 @@ using (var scope = app.Services.CreateScope())
     // This will create the database and tables if they don't exist
     dbContext.Database.EnsureCreated();
     
-    // Optional: Log to console for debugging
     Console.WriteLine("Database ensured created.");
 }
 
