@@ -10,10 +10,8 @@ namespace DailyBread.Data
         {
         }
 
-        // Table 1: Your Saved Verses
         public DbSet<FavoriteVerse> Favorites { get; set; }
         
-        // 👇 Table 2: Your Prayer Requests (MAKE SURE THIS IS HERE!)
         public DbSet<PrayerRequest> PrayerRequests { get; set; }
     }
 }
